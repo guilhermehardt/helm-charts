@@ -27,25 +27,17 @@ $ kubectl create secret generic eks-creds \
 #### Installing
 A instalação do Vault será feita no modo standalone, que possibilita executarmos uma única instância do Vault com armazenamento das secrets em uma estrutura de diretórios no filesystem local da instância. Caso necessite instalar o Vault em alta disponibilidade veja as instruções [aqui](https://www.vaultproject.io/docs/platform/k8s/helm/run#ha-mode).   
 
-O primeiro passo é configurar o repositório Vault Helm Chart    
 ```bash
+# o primeiro passo é configurar o repositório Vault Helm Chart
 $ helm repo add hashicorp https://helm.releases.hashicorp.com
-```
-Agora vamos instalar o Vault utilizando o arquivo de configuração que acabamos de criar:
-```bash
+# agora vamos instalar o Vault utilizando o arquivo de configuração que acabamos de criar:
 $ helm install vault hashicorp/vault -f ./values/values-<ENVIRONMENT>.yaml --namespace vault
-```
-Se tudo ocorrer bem, os componente do Vault serão criados no namespace vault, verifique os pods em execução:
-```bash
+# se tudo ocorrer bem, os componente do Vault serão criados no namespace vault, verifique os pods em execução:
 $ kubectl get pods --namespace vault
-```
-Assim que o Pod do Vault estiver com status running, vamos inicializar o Vault
-```bash
+# assim que o Pod do Vault estiver com status running, vamos inicializar o Vault
 $ kubectl exec -ti vault-0 -- vault operator init
-```
-O comando acima exibirá o seu *Initial Root Token* (algo como: s.LqIjL7WuWiy69mOiEizfmats), ele será necessário para acessar a interface gráfica do Vault.    
-Por fim, é possível verificar o status de execução para confirmar se o unseal foi executado com sucesso:
-```bash
+# OBS: o comando acima exibirá o seu *Initial Root Token* (algo como: s.LqIjL7WuWiy69mOiEizfmats), ele será necessário para acessar a interface gráfica
+# Por fim, é possível verificar o status de execução para confirmar se o unseal foi executado com sucesso:
 $ kubectl exec -ti vault-0 -- vault status
 ```
 #### Enable Secret Engine
