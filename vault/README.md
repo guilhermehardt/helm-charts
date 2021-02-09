@@ -45,8 +45,15 @@ O Vault disponibiliza diversas engines que podem ser utilizadas para armazenamen
 ```bash
 $ kubectl port-forward svc/vault 8200
 ```
-Na tela de autenticação, selecione o método *Token* e insira o *Initial Root Token*. Em seguida habilite o KV Engine seguindo os passos:
+Na tela de autenticação, selecione o método *Token* e insira o *Initial Root Token*. Em seguida habilite o KV Engine seguindo os passos
+
 ![](../.img/kv-engine.gif)
+
+### Upgrading
+Quando for necessário efetuar alguma alteração nas configurações do Vault, atualize o seu arquivo *values.yaml* e em seguida, basta executar o *helm upgrade*:
+```bash
+$ helm upgrade vault hashicorp/vault -f ./values/values-<ENVIRONMENT>.yaml --namespace vault
+```
 
 ### Unistall
 Para remover o Vault basta executar 
@@ -62,11 +69,15 @@ $ kubectl delete pvc data-vault-0 --namespace vault
 # delete namespace
 $ kubectl delete ns vault
 ```
+Para mais detalhes sobre a instalação ou configurações possíveis, consulte a [documentação oficial](https://www.vaultproject.io/docs/platform/k8s/helm)
 
 ## How to use
 ### Using Vault Cli
 É possível adicionar uma secret utilizando o Vault Cli, para isso, vamos exportar as seguintes credenciais:
 ```bash
+# primeiramente vamos utilizar o port-forward para acessar o vault localmente
+$ kubectl port-forward svc/vault 8200
+# exportar o endereço de acesso local
 $ export VAULT_ADDR='http://127.0.0.1:8200'
 # exportar initial root token
 $ export VAULT_TOKEN="s.17uoj6vR410VfKuFOvVXQD4M"
@@ -79,5 +90,7 @@ $ vault kv get kv/legiti
 # por fim, vamos remover a secret
 $ vault kv delete kv/legiti
 ```
+
 ### HTTP API
-As APIs HTTP permitem o acesso a todos os recursos do Vault. Inclusive, a comunicação entre vault cli e server é feita por meio destas mesmas APIs.
+As APIs HTTP permitem o acesso a todos os recursos do Vault, inclusive, a comunicação entre Vault cli e Vault server é feita por meio destas mesmas APIs.    
+Todas as aplicações que necessitem se comunicar com Vault também podem utilizar estas mesmas APIs HTTP, para mais detalhes consulte a [documentação oficial]((https://www.vaultproject.io/api))
