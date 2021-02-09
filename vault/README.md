@@ -93,4 +93,4 @@ $ vault kv delete kv/legiti
 
 ### HTTP API
 As APIs HTTP permitem o acesso a todos os recursos do Vault, inclusive, a comunicação entre Vault cli e Vault server é feita por meio destas mesmas APIs.    
-Todas as aplicações que necessitem se comunicar com Vault também podem utilizar estas mesmas APIs HTTP, para mais detalhes consulte a [documentação oficial]((https://www.vaultproject.io/api))
+Todas as aplicações que necessitem se comunicar com Vault também podem utilizar estas mesmas APIs HTTP, para mais detalhes consulte a [documentação oficial](https://www.vaultproject.io/api)
