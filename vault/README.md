@@ -84,11 +84,11 @@ $ export VAULT_TOKEN="s.17uoj6vR410VfKuFOvVXQD4M"
 # validar se o Vault está running
 $ vault status
 # para criar a primeira secret, utilizamos o comando *put*
-$ vault kv put kv/legiti target=fraudless
+$ vault kv put kv/foo target=bar
 # com o comando get, é possível recuperar os dados salvos
-$ vault kv get kv/legiti
+$ vault kv get kv/foo
 # por fim, vamos remover a secret
-$ vault kv delete kv/legiti
+$ vault kv delete kv/foo
 ```
 
 ### HTTP API
